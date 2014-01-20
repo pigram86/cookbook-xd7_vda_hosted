@@ -16,25 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-windows_zipfile "c:/" do
-  source node['xd7']['url']
-  action :unzip
-  not_if {::File.exists?(node['xd7']['dir'])}
-end
 
-
-windows_batch "XD7 VDAHosted" do
-  code <<-EOH
-  cd c:\\XenDesktop7_1
-  c:\\XenDesktop7_1\\x64\\XenDesktopSetup\\XenDesktopVdaSetup.exe /quiet /controllers "xdctrl01.daas.local" /enable_hdx_ports /optimize /enable_remote_assistance
-  EOH
-  not_if {::File.exists?(node['vda']['dir'])}
-  not_if {reboot_pending?}
-end
-
-# if feature installs, schedule a reboot at end of chef run
-windows_reboot 60 do
-  reason 'cause chef said so'
-  only_if {reboot_pending?}
-end 
-  
+default['xd7']['url'] = "https://dl.dropboxusercontent.com/u/36379525/XD71.zip"
+default['xd7']['dir'] = "c:/XenDesktop7_1"
+default['vda']['dir'] = "C:/Program Files/Citrix/Virtual Desktop Agent"
