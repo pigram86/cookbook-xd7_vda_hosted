@@ -25,8 +25,7 @@ end
 
 windows_batch "XD7 VDAHosted" do
   code <<-EOH
-  cd c:\\XenDesktop7_1
-  c:\\XenDesktop7_1\\x64\\XenDesktopSetup\\XenDesktopVdaSetup.exe /quiet /controllers "xdctrl01.daas.local" /enable_hdx_ports /optimize /enable_remote_assistance
+  c:\\XenDesktop7_1\\x64\\XenDesktopSetup\\XenDesktopVdaSetup.exe /quiet /controllers "da-xddc01.daas.local" /enable_hdx_ports /optimize /enable_remote_assistance
   EOH
   not_if {::File.exists?(node['vda']['dir'])}
   not_if {reboot_pending?}
